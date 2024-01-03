@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[ QUIZ ]</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #quiz-form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        #timer {
+            margin-bottom: 10px;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>파이썬 코드 퀴즈</h1>
+    <p id="timer">남은 시간: <span id="countdown">40</span>초</p>
+    <form id="quiz-form">
+        <label for="question1">함수의 호출 결과를 예측하세요 <pre>
+            def 함수(문자열) :
+                print(문자열)
+
+            함수("안녕")
+            함수("Hi")
+        </pre></label>
+        <input type="radio" name="question1" value="1"> a. <pre>
+            HI
+            안녕
+        </pre>
+        <input type="radio" name="question1" value="2"> b. <pre>
+            안녕
+            HI
+        </pre>
+        <input type="radio" name="question1" value="3"> c. <pre>
+            HIHI
+            안녕
+        </pre>
+        <input type="radio" name="question1" value="4"> d. <pre>
+            HI
+            안녕HI
+        </pre>
+        <input type="radio" name="question1" value="5"> e. <pre>
+            HI안녕
+            안녕HI
+        </pre>
+        <br><br><br><br>
+
+        <button type="button" onclick="checkAnswers()">제출</button>
+    </form>
+
+    <script>
+        let countdown = 40; // 초 단위로 설정
+
+        function updateTimer() {
+            const timerElement = document.getElementById('countdown');
+            timerElement.textContent = countdown;
+
+            if (countdown === 0) {
+                checkAnswers()
+            } else {
+                countdown--;
+                setTimeout(updateTimer, 1000);
+            }
+        }
+
+        // 페이지 로딩 후 1초마다 타이머 업데이트
+        setTimeout(updateTimer, 1000);
+
+        function checkAnswers() {
+            var userAnswer = []
+
+            var Answer = ["2"]
+
+            
+            for (var i = 1; i <= 6; i++) {
+
+                var element = document.querySelector(`input[name="question${i.toString()}"]:checked`);
+                if (element) {
+                    userAnswer.push(element.value);
+                } else {
+                    userAnswer.push("-");
+                }
+
+            }           
+
+            
+            for (var i = 0; i< 6; i++){
+                if (userAnswer[i] == Answer[i]) {
+                    document.write(localStorage.getItem("score"))
+                    localStorage.setItem('score', parseInt(localStorage.getItem('score')) + 100);
+                }
+            }
+            window.location.href = "success.html";
+            
+        }
+
+    </script>
+</body>
+</html>
